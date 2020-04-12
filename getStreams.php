@@ -15,8 +15,8 @@ $client->setScopes([
 ]);
 $client->setAccessType("offline");
 
-$sql = "select google_json from users where user = '$user'";
-$result = mysqli_query($db, $sql);
+$sql = "select google_json from users where user = ':user'";
+$result = query($db, $sql, ['user' => $user]);
 $data = json_decode(mysqli_fetch_array($result)[0], true);
 if (($data['created'] - time()) <= -3600) {
     $data = refreshToken($data['refreshToken'], $user, $db);
